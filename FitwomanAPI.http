@@ -1,0 +1,6 @@
+@FitwomanAPI_HostAddress = http://localhost:5043
+
+GET {{FitwomanAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
