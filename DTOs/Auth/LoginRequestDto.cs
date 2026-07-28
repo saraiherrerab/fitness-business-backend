@@ -4,10 +4,10 @@ namespace FitwomanAPI.DTOs.Auth;
 
 public class LoginRequestDto
 {
-    [Required(ErrorMessage = "El correo es obligatorio.")]
-    [EmailAddress(ErrorMessage = "Formato de correo inválido.")]
-    public string Correo { get; set; } = string.Empty;
+    [Required(ErrorMessage = "Email is required.")]
+    [EmailAddress(ErrorMessage = "Invalid email format.")]
+    public string Email { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "La contraseña es obligatoria.")]
-    public string Contraseña { get; set; } = string.Empty;
+    [Required(ErrorMessage = "Password is required.")]
+    public string Password { get; set; } = string.Empty;
 }

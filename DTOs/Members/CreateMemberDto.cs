@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace FitwomanAPI.DTOs.Auth;
+namespace FitwomanAPI.DTOs.Members;
 
-public class RegisterRequestDto
+public class CreateMemberDto
 {
     [Required(ErrorMessage = "First name is required.")]
     public string FirstName { get; set; } = string.Empty;
@@ -14,9 +14,7 @@ public class RegisterRequestDto
     [EmailAddress(ErrorMessage = "Invalid email format.")]
     public string Email { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "Password is required.")]
-    [MinLength(6, ErrorMessage = "Password must be at least 6 characters long.")]
-    public string Password { get; set; } = string.Empty;
+    public long? PlanId { get; set; }
 
-    public string Role { get; set; } = "Admin";
+    public string Status { get; set; } = "Active";
 }

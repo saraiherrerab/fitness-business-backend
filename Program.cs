@@ -1,4 +1,5 @@
 using System.Text;
+using Asp.Versioning;
 using FitwomanAPI.Data;
 using FitwomanAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -78,14 +79,28 @@ builder.Services.AddRouting(options =>
     options.LowercaseQueryStrings = true;
 });
 
-// 6. Habilitar soporte para Controladores
+// 6. Configurar Versionamiento de API (v1)
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+    options.ApiVersionReader = new UrlSegmentApiVersionReader();
+})
+.AddApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'VVV";
+    options.SubstituteApiVersionInUrl = true;
+});
+
+// 7. Habilitar soporte para Controladores
 builder.Services.AddControllers();
 
-// 6. Configuración de Swagger / OpenAPI con soporte para JWT
+// 8. Configuración de Swagger / OpenAPI con soporte para JWT y Versionamiento
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fitwoman API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fitwoman API v1", Version = "v1" });
 
     // Agregar definición de seguridad JWT en Swagger UI
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -115,11 +130,14 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-// 7. Configurar el pipeline HTTP
+// 9. Configurar el pipeline HTTP
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fitwoman API v1");
+    });
 }
 
 app.UseHttpsRedirection();
@@ -131,7 +149,7 @@ app.UseCors("AllowFrontends");
 app.UseAuthentication();
 app.UseAuthorization();
 
-// 8. Mapear rutas de los Controladores
+// 10. Mapear rutas de los Controladores
 app.MapControllers();
 
 app.Run();
