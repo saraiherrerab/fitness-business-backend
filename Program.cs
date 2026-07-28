@@ -71,7 +71,14 @@ builder.Services.AddCors(options =>
     });
 });
 
-// 5. Habilitar soporte para Controladores
+// 5. Configurar Enrutamiento en minúsculas (Estándar REST)
+builder.Services.AddRouting(options =>
+{
+    options.LowercaseUrls = true;
+    options.LowercaseQueryStrings = true;
+});
+
+// 6. Habilitar soporte para Controladores
 builder.Services.AddControllers();
 
 // 6. Configuración de Swagger / OpenAPI con soporte para JWT
