@@ -10,8 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace FitwomanAPI.Controllers.V1;
 
 [ApiController]
-[ApiVersion("1.0")]
-[Route("api/v{version:apiVersion}/members")]
+[Route("api/v1/members")]
 [Authorize]
 public class MembersController : ControllerBase
 {

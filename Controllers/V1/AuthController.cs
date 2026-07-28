@@ -11,8 +11,7 @@ using Microsoft.EntityFrameworkCore;
 namespace FitwomanAPI.Controllers.V1;
 
 [ApiController]
-[ApiVersion("1.0")]
-[Route("api/v{version:apiVersion}/auth")]
+[Route("api/v1/auth")]
 public class AuthController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
